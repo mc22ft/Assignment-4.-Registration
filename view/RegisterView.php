@@ -9,7 +9,7 @@ class RegisterView{
 	 * @var string
 	 */
 	private static $message = "RegisterView::Message";
-	private static $username = "RegisterView::UserName";
+	private static $name = "RegisterView::UserName";
 	private static $password = "RegisterView::Password";
 	private static $passwordRepeat = "RegisterView::PasswordRepeat";
     private static $doRegistration = "RegisterView::DoRegistration";
@@ -39,8 +39,8 @@ class RegisterView{
 				<fieldset>
 					<legend>Register a new user - Write username and password</legend>
 					<p id='".self::$message."'>$message</p>
-                    <label for='".self::$username."'>Username :</label>
-					<input type='text' id='".self::$username."' name='".self::$username."' value=''/>
+                    <label for='".self::$name."'>Username :</label>
+					<input type='text' id='".self::$name."' name='".self::$name."' value='".$this->getRequestUserName()."'/>
                     <br>
                     <label for='".self::$password."'>Password :</label>
 					<input type='password' id='".self::$password."' name='".self::$password."' value=''/>
@@ -71,13 +71,23 @@ class RegisterView{
              }
             $message .= "Password has too few characters, at least 6 characters.";
         }
+        
+        if($this->getPassword() != $this->getPasswordRepeat()){
+            return "Passwords do not match.";
+        }
 
         return $message;
     }
 
+    private function getRequestUserName() {
+		if (isset($_POST[self::$name]))
+			return trim($_POST[self::$name]);
+		return "";
+	}
+
     private function getUserName() {
-		if (isset($_POST[self::$username])){
-		    return trim($_POST[self::$username]);
+		if (isset($_POST[self::$name])){
+		    return trim($_POST[self::$name]);
 		}
 		return "";
 	}
@@ -88,6 +98,11 @@ class RegisterView{
 		return "";
 	}
 
+    private function getPasswordRepeat() {
+		if (isset($_POST[self::$passwordRepeat]))
+			return trim($_POST[self::$passwordRepeat]);
+		return "";
+	}
 
 
 
