@@ -18,8 +18,9 @@ session_start();
 
 //Dependency injection
 $m = new \model\LoginModel();
-$v = new \view\LoginView($m);
-$c = new \controller\LoginController($m, $v);
+$r = new \view\RegisterView();
+$v = new \view\LoginView($m, $r);
+$c = new \controller\LoginController($m, $v, $r);
 
 
 //Controller must be run first since state is changed

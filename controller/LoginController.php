@@ -7,15 +7,18 @@ namespace controller;
 
 require_once("model/LoginModel.php");
 require_once("view/LoginView.php");
+require_once("view/RegisterView.php");
 
 class LoginController {
 
 	private $model;
 	private $view;
+    private $rView;
 
-	public function __construct(\model\LoginModel $model, \view\LoginView $view) {
+	public function __construct(\model\LoginModel $model, \view\LoginView $view, \view\RegisterView $rView) {
 		$this->model = $model;
 		$this->view =  $view;
+        $this->rView = $rView;
 	}
 
 	public function doControl() {
@@ -36,7 +39,10 @@ class LoginController {
 				} else {
 					$this->view->setLoginFailed();
 				}
-			}
+			}//else if($this->view->userWantsToRegister()){ //BÖRJAR HÄR
+			    
+			//}
+            
 		}
 		$this->model->renew($userClient);
 	}

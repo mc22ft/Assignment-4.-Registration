@@ -38,12 +38,17 @@ class LoginView {
 	 */
 	private $model;
 
+    //@var \view\LoginView
+    private $rView;
+
 	/**
 	 * @param \model\LoginModel $model
+     *        \view\LoginView $rView
 	 */
-	public function __construct(\model\LoginModel $model) {
+	public function __construct(\model\LoginModel $model, \view\RegisterView $rView) {
 		self::$sessionSaveLocation .= \Settings::APP_SESSION_NAME;
 		$this->model = $model;
+        $this->rView = $rView;
 	}
 
 	/**
@@ -119,6 +124,10 @@ class LoginView {
 		if ($this->model->isLoggedIn($this->getUserClient())) {
 			return $this->doLogoutForm();
 		} else {
+            if (isset($_GET['register'])) {
+                    //Redirect to RegisterView and render a registerview
+                    return $this->rView->doRegisterForm();
+            }
 			return $this->doLoginForm();
 		}
 	}
